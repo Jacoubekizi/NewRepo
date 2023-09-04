@@ -1,7 +1,7 @@
-pip install django
-pip install djangorestframework
-pip install djangorestframework-simplejwt
-pip install django-import-export
-pip install Django-Admin-Object-Actions
-pip install django-imagekit
-oneoneoene
+django
+djangorestframework
+djangorestframework-simplejwt
+django-import-export
+Django-Admin-Object-Actions
+django-imagekit
+drf-yasg
