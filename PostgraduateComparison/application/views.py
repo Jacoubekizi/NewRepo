@@ -9,7 +9,11 @@ from accounts.api.permission import IsStudent
 from .validations import *
 import json
 from rest_framework.views import Http404
-# Create your views here.
+# from django.views.decorators.cache import cache_page
+# from django.utils.decorators import method_decorator
+from rest_framework.decorators import api_view
+from vonage import sms, client
+# # Create your views here.
 
 # Registration for the comparison
 
@@ -35,16 +39,17 @@ class Update_Information_Student(APIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class Register(APIView):
 
     permission_classes = [permissions.IsAuthenticated, IsStudent]
 
     def post(self, request):
         data = request.data
-        user = request.user
-        user_one = Student.objects.get(user__email=user.email)
+        user_q = request.user
+        # print(type(user))
+        user_one = Student.objects.get(user__email=user_q.email)
         des = json.loads(data['desires'])
+        # des = data['desires']
         list_desire = validate_desires(des)
         final_average = finale_average(data)
         user = student(data)
@@ -63,9 +68,25 @@ class Register(APIView):
             serializer.save()   
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     
 
 
+# def send_sms():
+#     responseData = client.sms.send_message(
+#         {
+#             "from": "Vonage APIs",
+#             "to": "+963957322954",
+#             "text": "A text message sent using the Vonage SMS API",
+#         }
+#     )
+
+#     if responseData["messages"][0]["status"] == "0":
+#         print("Message sent successfully.")
+#     else:
+#         print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
+
+        
 def sorting():
 
 
@@ -82,14 +103,23 @@ def sorting():
                         serializer.save()
                     break
 
-
+# @method_decorator( cache_page(60*5), name='dispatch')
 class GetDesires(APIView):
     def get(self, request):
         desires = Dseires.objects.all()
         serializer = StuDesSerializer(desires, many=True)
         data = serializer.data
         return Response(data)
-    
+
+# @cache_page(timeout=(60*5))
+@api_view(['GET'])
+def get_des(requser):
+    desires = Dseires.objects.all()
+    serializer = StuDesSerializer(desires, many=True)
+    data = serializer.data
+    return Response(data)
+
+
 # add universiyt and list all universitys
 
 # class AddUniversity(APIView):

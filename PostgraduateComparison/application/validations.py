@@ -32,9 +32,12 @@ def finale_average(data):
 def student(data):
     Id_number = data['idnumber']
     username = data['username']
+    print(type(Id_number), type(username))
     id = 0
     for student in Students_University.objects.all():
+        print(student.username == username)
         if student.Id_Number == int(Id_number) and student.username == username:
             id = student.id
+            print(id)
             break
     return id

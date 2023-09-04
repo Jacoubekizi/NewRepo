@@ -27,8 +27,10 @@ SECRET_KEY = 'django-insecure-=w_h_if-@9#_=jr&v)hq%jrx0hzkvcl%hfqite3p-&xyy%7gy(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.253.1']
-
+ALLOWED_HOSTS = []
+# INTERNAL_IPS = [
+#     '127.0.0.1',
+# ]
 
 # Application definition
 
@@ -47,20 +49,32 @@ INSTALLED_APPS = [
     'import_export',
     'django_object_actions',
     'imagekit',
+    'drf_yasg',
+    # 'debug_toolbar'
 ]
 
+
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
+#         "LOCATION": "redis://192.168.227.184:6379/",
+#         "OPTIONS": {
+#             # "CLIENT_CLASS" : "django_redis.client.DefaultClient"
+#         }
+#     }
+# }
 AUTH_USER_MODEL = 'accounts.CustomUser'
 # ACCOUNT_UNIQUE_EMAIL= True
 
 REST_FRAMEWORK = {
+
+    'NON_FIELD_ERRORS_KEY':'error',
+
+
     'DEFAULT_AUTHENTICATION_CLASSES':(
     'rest_framework_simplejwt.authentication.JWTAuthentication',
     'rest_framework.authentication.SessionAuthentication',
     ),
-
-    # 'DEFAULT_RENDERER_CLASSES':(
-    #     'rest_framework.renderers.JSONRenderer',
-    # )
 }
 
 MIDDLEWARE = [
@@ -71,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'PostgraduateComparison.urls'
@@ -193,3 +208,11 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Replace with your preferred backend
+EMAIL_HOST = 'smtp.gmail.com' # Replace with your email host for gmail -> 'smtp.gmail.com'
+EMAIL_PORT = 587  # Replace with your email port
+EMAIL_USE_TLS = True  # Set to False if your email server doesn't use TLS
+EMAIL_HOST_USER = 'jacoubakizi@gmail.com'  # Replace with your email username
+EMAIL_HOST_PASSWORD = 'cyubsefxfpljjdpz'  # Replace with your email password
+# RECIPIENT_ADDRESS = env('RECIPIENT_ADDRESS')

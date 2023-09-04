@@ -1,6 +1,6 @@
 import django
 from django.contrib import admin
-from django.contrib import sessions
+
 from django.contrib.auth.models import Group, Permission
 from django.core.handlers.wsgi import WSGIRequest
 from .models import *

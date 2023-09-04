@@ -24,7 +24,7 @@ class CustomUserAdmin(UserAdmin):
         {'fields':('username', 'first_name', 'last_name', 'is_student', 'is_employee')}
     ),
     ('Permissions', 
-        {'fields':('is_staff', 'is_superuser', 'is_active', 'groups','user_permissions')}
+        {'fields':('is_verified', 'is_staff', 'is_superuser', 'is_active', 'groups','user_permissions')}
     ),
     ('Registration', 
         {'fields':('date_joined', 'last_login',)}
