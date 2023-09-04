@@ -4,3 +4,4 @@ pip install djangorestframework-simplejwt
 pip install django-import-export
 pip install Django-Admin-Object-Actions
 pip install django-imagekit
+oneoneoene
