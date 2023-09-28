@@ -12,7 +12,6 @@ from rest_framework.views import Http404
 # from django.views.decorators.cache import cache_page
 # from django.utils.decorators import method_decorator
 from rest_framework.decorators import api_view
-from vonage import sms, client
 # # Create your views here.
 
 # Registration for the comparison
@@ -69,27 +68,9 @@ class Register(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
-
-
-# def send_sms():
-#     responseData = client.sms.send_message(
-#         {
-#             "from": "Vonage APIs",
-#             "to": "+963957322954",
-#             "text": "A text message sent using the Vonage SMS API",
-#         }
-#     )
-
-#     if responseData["messages"][0]["status"] == "0":
-#         print("Message sent successfully.")
-#     else:
-#         print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
-
         
 def sorting():
-
-
+    
     for student in InformationStudent.objects.all().order_by('-final_average'):
         for d in student.desires.all():
                 adminassion = Admissions.objects.filter(desire=d).count()
@@ -110,14 +91,6 @@ class GetDesires(APIView):
         serializer = StuDesSerializer(desires, many=True)
         data = serializer.data
         return Response(data)
-
-# @cache_page(timeout=(60*5))
-@api_view(['GET'])
-def get_des(requser):
-    desires = Dseires.objects.all()
-    serializer = StuDesSerializer(desires, many=True)
-    data = serializer.data
-    return Response(data)
 
 
 # add universiyt and list all universitys
